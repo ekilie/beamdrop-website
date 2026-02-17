@@ -122,16 +122,20 @@ function Landing() {
                         </a>
                     </motion.div>
 
-                    {/* Quick start snippet */}
+                    {/* Product screenshot */}
                     <motion.div
-                        className="mt-14 max-w-lg mx-auto"
+                        className="mt-14 max-w-3xl mx-auto"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.55 }}
                     >
-                        <CodeBlock title="Quick Start">
-                            {`# Share current directory\nbeamdrop\n\n# With password\nbeamdrop -p mysecret`}
-                        </CodeBlock>
+                        <div className="rounded-lg overflow-hidden border border-border shadow-medium">
+                            <img
+                                src="/beamdrop.jpeg"
+                                alt="BeamDrop file browser interface"
+                                className="w-full h-auto"
+                            />
+                        </div>
                     </motion.div>
                 </div>
             </section>
