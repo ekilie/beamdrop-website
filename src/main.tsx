@@ -1,10 +1,19 @@
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
 import "./index.css";
-import { SettingsProvider } from "@/context/settings.tsx";
+
+const router = createRouter({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 createRoot(document.getElementById("beamdrop")!).render(
-  <SettingsProvider>
-    <App />
-  </SettingsProvider>,
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
 );
