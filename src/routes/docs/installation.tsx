@@ -14,7 +14,10 @@ function InstallationPage() {
       title="Installation"
       description="Install BeamDrop from source, download pre-built binaries, or use Docker."
     >
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3"
+      >
         Quick Install (macOS & Linux)
       </Heading>
       <CodeBlock title="One-line install">
@@ -38,14 +41,20 @@ function InstallationPage() {
         .
       </p>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         From Source
       </Heading>
       <CodeBlock title="Build from source">
         {`git clone https://github.com/ekilie/beamdrop.git\ncd beamdrop\nmake build`}
       </CodeBlock>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         Platform Binaries
       </Heading>
       <DocTabs

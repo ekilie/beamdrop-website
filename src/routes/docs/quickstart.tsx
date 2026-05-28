@@ -13,7 +13,10 @@ function QuickStartPage() {
       title="Quick Start"
       description="Get BeamDrop up and running in seconds."
     >
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3"
+      >
         Basic Usage
       </Heading>
       <CodeBlock title="CLI">
@@ -24,14 +27,20 @@ function QuickStartPage() {
         Use <code>-qr</code> flag to generate a QR code for quick mobile access.
       </Callout>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         With S3-Compatible API
       </Heading>
       <CodeBlock title="Enable API auth">
         {`# Enable API authentication\nbeamdrop -dir /path/to/share -api-auth\n\n# With HTTPS\nbeamdrop -dir /path/to/share -api-auth -tls-cert cert.pem -tls-key key.pem`}
       </CodeBlock>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         Docker Compose (Recommended)
       </Heading>
       <CodeBlock title="Docker Compose">

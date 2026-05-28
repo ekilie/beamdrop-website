@@ -13,7 +13,10 @@ function AuthPage() {
       title="Authentication"
       description="BeamDrop has two independent auth systems: password auth for the web UI, and API key auth for the S3 API."
     >
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3"
+      >
         Overview
       </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
@@ -28,7 +31,10 @@ function AuthPage() {
         </li>
       </ul>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         Password Auth (Web UI)
       </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -36,7 +42,10 @@ function AuthPage() {
         <code className="text-primary">-p &lt;password&gt;</code>, all routes
         except health probes, login, and static assets require authentication.
       </p>
-      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
         Public Routes (Always Accessible)
       </Heading>
       <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm">
@@ -65,7 +74,10 @@ function AuthPage() {
         </li>
       </ul>
 
-      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
         Login / Logout
       </Heading>
       <CodeBlock title="Check auth status">
@@ -78,7 +90,10 @@ function AuthPage() {
         {`POST /auth/logout\nAuthorization: Bearer <token>\n\n# Response:\n{ "message": "Logged out successfully" }`}
       </CodeBlock>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         API Key Auth (S3 API)
       </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -105,14 +120,18 @@ function AuthPage() {
         time. Ensure your system clock is synchronized.
       </Callout>
 
-      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         HMAC Signature Generation
       </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         The signature is computed as:
       </p>
       <Callout type="info" title="Save Your Secret Key">
-        The <code>secretKey</code> is shown only once when you create an API key. Store it securely.
+        The <code>secretKey</code> is shown only once when you create an API
+        key. Store it securely.
       </Callout>
       <CodeBlock title="Signature algorithm" language="markup">
         {`string_to_sign = "<METHOD>\\n<PATH>\\n<TIMESTAMP>"\nsignature = Base64(HMAC-SHA256(secret_key, string_to_sign))`}
