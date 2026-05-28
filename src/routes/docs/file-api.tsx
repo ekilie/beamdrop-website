@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/file-api")({
   component: FileApiPage,
@@ -17,9 +18,9 @@ function FileApiPage() {
       </p>
 
       {/* List Files */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         List Files
-      </h2>
+      </Heading>
       <CodeBlock title="GET /files">
         {`GET /files?path=<relative_path>`}
       </CodeBlock>
@@ -42,9 +43,9 @@ function FileApiPage() {
       </p>
 
       {/* Upload File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Upload File
-      </h2>
+      </Heading>
       <CodeBlock title="POST /upload">
         {`POST /upload\nContent-Type: multipart/form-data`}
       </CodeBlock>
@@ -62,50 +63,50 @@ function FileApiPage() {
       </p>
 
       {/* Download File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Download File
-      </h2>
+      </Heading>
       <CodeBlock title="GET /download">
         {`GET /download?file=<filename>`}
       </CodeBlock>
       <p className="text-sm text-muted-foreground">Returns raw file content.</p>
 
       {/* Create Directory */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Create Directory
-      </h2>
+      </Heading>
       <CodeBlock title="POST /mkdir">
         {`POST /mkdir\nContent-Type: application/json\n\n{ "dirPath": "path/to/new-directory" }\n\n# Response:\n{\n  "message": "Directory created successfully",\n  "path": "path/to/new-directory"\n}`}
       </CodeBlock>
 
       {/* Move File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Move File
-      </h2>
+      </Heading>
       <CodeBlock title="POST /move">
         {`POST /move\nContent-Type: application/json\n\n{\n  "sourcePath": "old/location/file.txt",\n  "targetPath": "new/location/file.txt"\n}\n\n# Response:\n{\n  "message": "File moved successfully",\n  "from": "old/location/file.txt",\n  "to": "new/location/file.txt"\n}`}
       </CodeBlock>
 
       {/* Copy File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Copy File
-      </h2>
+      </Heading>
       <CodeBlock title="POST /copy">
         {`POST /copy\nContent-Type: application/json\n\n{\n  "sourcePath": "original/file.txt",\n  "targetPath": "copy/file.txt"\n}\n\n# Response:\n{\n  "message": "File copied successfully",\n  "from": "original/file.txt",\n  "to": "copy/file.txt"\n}`}
       </CodeBlock>
 
       {/* Rename File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Rename File
-      </h2>
+      </Heading>
       <CodeBlock title="POST /rename">
         {`POST /rename\nContent-Type: application/json\n\n{\n  "oldPath": "documents/report.txt",\n  "newName": "final-report.txt"\n}\n\n# Response:\n{\n  "message": "Renamed successfully",\n  "oldPath": "documents/report.txt",\n  "newPath": "documents/final-report.txt"\n}`}
       </CodeBlock>
 
       {/* Trash File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Trash File
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         Moves a file to <code className="text-primary">.beamdrop_trash/</code>{" "}
         instead of permanently deleting it.
@@ -115,9 +116,9 @@ function FileApiPage() {
       </CodeBlock>
 
       {/* Write File */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Write File
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         Write content directly to a file (creates parent directories
         automatically).
@@ -127,9 +128,9 @@ function FileApiPage() {
       </CodeBlock>
 
       {/* Search Files */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Search Files
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         Recursively search for files by name (case-insensitive substring match).
       </p>
@@ -148,9 +149,9 @@ function FileApiPage() {
       </CodeBlock>
 
       {/* Star / Unstar */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Star / Unstar File
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         Toggle the starred status of a file (starred → unstarred, unstarred →
         starred).
@@ -160,9 +161,9 @@ function FileApiPage() {
       </CodeBlock>
 
       {/* Get Starred */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Get Starred Files
-      </h2>
+      </Heading>
       <CodeBlock title="GET /starred">
         {`GET /starred\n\n# Response:\n{\n  "starred": [\n    {\n      "filePath": "documents/important.pdf",\n      "createdAt": "2025-01-15T10:30:00Z"\n    }\n  ]\n}`}
       </CodeBlock>
