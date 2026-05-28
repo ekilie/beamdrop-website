@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
+import { Callout } from "@/components/Callout";
 
 export const Route = createFileRoute("/docs/authentication")({
   component: AuthPage,
@@ -11,9 +13,9 @@ function AuthPage() {
       title="Authentication"
       description="BeamDrop has two independent auth systems: password auth for the web UI, and API key auth for the S3 API."
     >
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Overview
-      </h2>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>
           <strong>Password Auth</strong> — Protects the web UI and file
@@ -26,17 +28,17 @@ function AuthPage() {
         </li>
       </ul>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Password Auth (Web UI)
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         When started with{" "}
         <code className="text-primary">-p &lt;password&gt;</code>, all routes
         except health probes, login, and static assets require authentication.
       </p>
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Public Routes (Always Accessible)
-      </h3>
+      </Heading>
       <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm">
         <li>
           <code className="text-primary">/</code> — Landing page
@@ -63,9 +65,9 @@ function AuthPage() {
         </li>
       </ul>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Login / Logout
-      </h3>
+      </Heading>
       <CodeBlock title="Check auth status">
         {`GET /auth/status\n\n# Response:\n{\n  "authEnabled": true,\n  "authenticated": false\n}`}
       </CodeBlock>
@@ -76,9 +78,9 @@ function AuthPage() {
         {`POST /auth/logout\nAuthorization: Bearer <token>\n\n# Response:\n{ "message": "Logged out successfully" }`}
       </CodeBlock>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         API Key Auth (S3 API)
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         When started with <code className="text-primary">-api-auth</code>, every
         request to <code className="text-primary">/api/v1/buckets/*</code> must
@@ -98,17 +100,20 @@ function AuthPage() {
           header
         </li>
       </ol>
-      <p className="text-sm text-muted-foreground mt-3">
+      <Callout type="warning" title="Clock Skew">
         The timestamp must be within <strong>15 minutes</strong> of the server
-        time (clock skew tolerance).
-      </p>
+        time. Ensure your system clock is synchronized.
+      </Callout>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         HMAC Signature Generation
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         The signature is computed as:
       </p>
+      <Callout type="info" title="Save Your Secret Key">
+        The <code>secretKey</code> is shown only once when you create an API key. Store it securely.
+      </Callout>
       <CodeBlock title="Signature algorithm" language="markup">
         {`string_to_sign = "<METHOD>\\n<PATH>\\n<TIMESTAMP>"\nsignature = Base64(HMAC-SHA256(secret_key, string_to_sign))`}
       </CodeBlock>
