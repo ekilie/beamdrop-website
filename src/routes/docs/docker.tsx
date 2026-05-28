@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/docker")({
   component: DockerPage,
@@ -12,9 +13,9 @@ function DockerPage() {
       description="Run BeamDrop with Docker, Docker Compose, Kubernetes, or behind a Caddy reverse proxy."
     >
       {/* Docker Run */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Docker
-      </h2>
+      </Heading>
       <CodeBlock title="Docker Run">
         {`docker run -d \\\n  --name beamdrop \\\n  -p 7777:7777 \\\n  -v beamdrop-data:/data \\\n  -e BEAMDROP_PASSWORD="secret" \\\n  -e BEAMDROP_API_AUTH=true \\\n  -e BEAMDROP_RATE_LIMIT=100 \\\n  beamdrop`}
       </CodeBlock>
@@ -24,25 +25,25 @@ function DockerPage() {
       </p>
 
       {/* Docker Compose */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Docker Compose
-      </h2>
+      </Heading>
       <CodeBlock title="docker-compose.yml" language="yaml">
         {`services:\n  beamdrop:\n    build: .\n    ports:\n      - "7777:7777"\n    volumes:\n      - ./data:/data\n    environment:\n      BEAMDROP_PORT: \${BEAMDROP_PORT:-7777}\n      BEAMDROP_PASSWORD: \${BEAMDROP_PASSWORD:-}\n      BEAMDROP_API_AUTH: \${BEAMDROP_API_AUTH:-false}\n      BEAMDROP_RATE_LIMIT: \${BEAMDROP_RATE_LIMIT:-100}\n      BEAMDROP_MAX_STORAGE: \${BEAMDROP_MAX_STORAGE:-0}\n      BEAMDROP_LOG_LEVEL: \${BEAMDROP_LOG_LEVEL:-info}\n      BEAMDROP_QR: \${BEAMDROP_QR:-false}\n      BEAMDROP_ALLOWED_ORIGINS: \${BEAMDROP_ALLOWED_ORIGINS:-}\n      BEAMDROP_DB_PATH: \${BEAMDROP_DB_PATH:-}\n      BEAMDROP_TLS_CERT: \${BEAMDROP_TLS_CERT:-}\n      BEAMDROP_TLS_KEY: \${BEAMDROP_TLS_KEY:-}\n    healthcheck:\n      test: ["CMD", "wget", "-q", "--spider", "http://localhost:7777/health/live"]\n      interval: 30s\n      timeout: 5s\n      retries: 3\n    restart: unless-stopped`}
       </CodeBlock>
 
       {/* Kubernetes */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Kubernetes Probes
-      </h2>
+      </Heading>
       <CodeBlock title="deployment.yaml (probes section)" language="yaml">
         {`livenessProbe:\n  httpGet:\n    path: /health/live\n    port: 7777\n  initialDelaySeconds: 5\n  periodSeconds: 10\n  failureThreshold: 3\n\nreadinessProbe:\n  httpGet:\n    path: /health/ready\n    port: 7777\n  initialDelaySeconds: 10\n  periodSeconds: 15\n  failureThreshold: 3\n\nstartupProbe:\n  httpGet:\n    path: /health/startup\n    port: 7777\n  failureThreshold: 30\n  periodSeconds: 2`}
       </CodeBlock>
 
       {/* Rate Limiting */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Rate Limiting
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         When <code className="text-primary">-rate-limit N</code> is set,
         different endpoint categories get different limits:
@@ -57,9 +58,9 @@ function DockerPage() {
       />
 
       {/* Caddy */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Caddy Reverse Proxy
-      </h2>
+      </Heading>
       <CodeBlock title="Caddyfile" language="markup">
         {`{$BEAMDROP_DOMAIN:localhost} {\n  reverse_proxy beamdrop:7777\n}`}
       </CodeBlock>
@@ -80,17 +81,17 @@ function DockerPage() {
       </ol>
 
       {/* Prometheus */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Prometheus Scrape Config
-      </h2>
+      </Heading>
       <CodeBlock title="prometheus.yml" language="yaml">
         {`scrape_configs:\n  - job_name: beamdrop\n    static_configs:\n      - targets: ["beamdrop:7777"]\n    metrics_path: /metrics\n    scrape_interval: 15s`}
       </CodeBlock>
 
       {/* Environment Variables */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Environment Variables
-      </h2>
+      </Heading>
       <DocTable
         headers={["Variable", "Default", "Description"]}
         rows={[
