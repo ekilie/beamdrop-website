@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
+import { Callout } from "@/components/Callout";
 
 export const Route = createFileRoute("/docs/quickstart")({
   component: QuickStartPage,
@@ -11,23 +13,27 @@ function QuickStartPage() {
       title="Quick Start"
       description="Get BeamDrop up and running in seconds."
     >
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Basic Usage
-      </h2>
+      </Heading>
       <CodeBlock title="CLI">
         {`# Share current directory\nbeamdrop\n\n# Share specific directory\nbeamdrop -dir /path/to/share\n\n# With password protection\nbeamdrop -dir /path/to/share -p mysecretpassword\n\n# With custom port\nbeamdrop -dir /path/to/share -port 9000`}
       </CodeBlock>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Callout type="tip">
+        Use <code>-qr</code> flag to generate a QR code for quick mobile access.
+      </Callout>
+
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         With S3-Compatible API
-      </h2>
+      </Heading>
       <CodeBlock title="Enable API auth">
         {`# Enable API authentication\nbeamdrop -dir /path/to/share -api-auth\n\n# With HTTPS\nbeamdrop -dir /path/to/share -api-auth -tls-cert cert.pem -tls-key key.pem`}
       </CodeBlock>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Docker Compose (Recommended)
-      </h2>
+      </Heading>
       <CodeBlock title="Docker Compose">
         {`# Start in background\ndocker compose up -d\n\n# View logs\ndocker compose logs -f beamdrop\n\n# Stop\ndocker compose down`}
       </CodeBlock>
