@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/configuration")({
   component: ConfigurationPage,
@@ -11,9 +12,9 @@ function ConfigurationPage() {
       title="Configuration"
       description="All CLI flags and environment variables for configuring BeamDrop."
     >
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Command Line Flags
-      </h2>
+      </Heading>
       <DocTable
         headers={["Flag", "Description", "Default"]}
         rows={[
@@ -51,9 +52,9 @@ function ConfigurationPage() {
         ]}
       />
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Environment Variables (Docker)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Variable", "Default", "Description"]}
         rows={[
@@ -75,16 +76,16 @@ function ConfigurationPage() {
         ]}
       />
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Quick Start Examples
-      </h2>
+      </Heading>
       <CodeBlock title="CLI examples">
         {`# Share current directory\nbeamdrop\n\n# Share a specific directory with password\nbeamdrop -dir /path/to/share -p mysecretpassword\n\n# Enable S3 API with auth\nbeamdrop -dir /path/to/share -api-auth\n\n# Full production setup\nbeamdrop -dir /data -p secret -api-auth -tls-cert cert.pem -tls-key key.pem -rate-limit 200`}
       </CodeBlock>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Upload Limits
-      </h2>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>
           <strong>Max file size:</strong> 100 MB
@@ -96,9 +97,9 @@ function ConfigurationPage() {
         </li>
       </ul>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Security Features
-      </h2>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>HTTPS/TLS support for encrypted connections</li>
         <li>Configurable CORS with strict defaults (disabled by default)</li>
@@ -109,9 +110,9 @@ function ConfigurationPage() {
         </li>
       </ul>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Structured Logging
-      </h2>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>Colored, human-readable terminal output</li>
         <li>
