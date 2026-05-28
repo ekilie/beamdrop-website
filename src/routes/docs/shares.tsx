@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/shares")({
   component: SharesPage,
@@ -12,9 +13,9 @@ function SharesPage() {
       description="Share files and folders via unique URLs with optional password protection and expiry. They bypass normal authentication."
     >
       {/* Create Link */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Create Link
-      </h2>
+      </Heading>
       <CodeBlock title="POST /api/shares">
         {`POST /api/shares\nContent-Type: application/json\n\n{\n  "path": "documents/report.pdf",\n  "password": "optional-password",\n  "expiresIn": 86400\n}`}
       </CodeBlock>
@@ -31,25 +32,25 @@ function SharesPage() {
       </CodeBlock>
 
       {/* List Links */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         List Links
-      </h2>
+      </Heading>
       <CodeBlock title="GET /api/shares/list">
         {`GET /api/shares/list\n\n# Response:\n[\n  {\n    "id": 1,\n    "path": "documents/report.pdf",\n    "token": "abc123def456",\n    "hasPassword": true,\n    "expiresAt": "2025-01-16T10:30:00Z",\n    "accessCount": 5,\n    "createdAt": "2025-01-15T10:30:00Z"\n  }\n]`}
       </CodeBlock>
 
       {/* Delete Link */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Delete Link
-      </h2>
+      </Heading>
       <CodeBlock title="DELETE /api/shares/delete">
         {`DELETE /api/shares/delete?token=abc123def456\n\n# Response:\n{ "message": "Shareable link deleted successfully" }`}
       </CodeBlock>
 
       {/* Access Link */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Access Link
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         Public endpoint — no authentication required (but may require link
         password).
@@ -66,17 +67,17 @@ function SharesPage() {
         {`{\n  "path": "documents",\n  "files": [...],\n  "isDir": true\n}`}
       </CodeBlock>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Download & Preview Modes
-      </h3>
+      </Heading>
       <CodeBlock>
         {`# Download mode:\nGET /api/shares/access/{token}?mode=download\n\n# Inline preview mode:\nGET /api/shares/access/{token}?mode=inline`}
       </CodeBlock>
 
       {/* Web UI */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Using the Web UI
-      </h2>
+      </Heading>
       <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
         <li>Navigate to a file or folder in the browser</li>
         <li>Right-click and select "Share Link" from the context menu</li>
@@ -84,9 +85,9 @@ function SharesPage() {
         <li>Click "Generate Link" and copy the URL</li>
       </ol>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Security Considerations
-      </h2>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>Password-protected links require the correct password to access</li>
         <li>Expired links are automatically rejected</li>
