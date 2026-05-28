@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/monitoring")({
   component: MonitoringPage,
@@ -12,9 +13,9 @@ function MonitoringPage() {
       description="Kubernetes-compatible health probes, Prometheus metrics, real-time stats, WebSocket events, and structured logs."
     >
       {/* Health Endpoints */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Health Endpoints
-      </h2>
+      </Heading>
       <DocTable
         headers={["Endpoint", "Purpose", "Use Case"]}
         rows={[
@@ -30,25 +31,25 @@ function MonitoringPage() {
       </CodeBlock>
 
       {/* Stats */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Stats Endpoint
-      </h2>
+      </Heading>
       <CodeBlock title="GET /stats">
         {`GET /stats\n\n{\n  "downloads": 42,\n  "uploads": 15,\n  "requests": 1234,\n  "startTime": "2025-01-15T08:00:00Z"\n}`}
       </CodeBlock>
 
       {/* WebSocket */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Real-Time Stats (WebSocket)
-      </h2>
+      </Heading>
       <CodeBlock title="WebSocket connection">
         {`ws://localhost:7777/ws/stats\n\n# Receives updates every 60 seconds:\n{\n  "downloads": 42,\n  "requests": 1234,\n  "uploads": 15,\n  "startTime": "2025-01-15T08:00:00Z",\n  "system": {\n    "memory": { "total": 16000000000, "used": 8000000000, "percent": 50.0 },\n    "disk": { "total": 500000000000, "used": 200000000000, "percent": 40.0 },\n    "cpu": { "percent": 25.0 }\n  }\n}`}
       </CodeBlock>
 
       {/* Logs */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Logs Endpoint
-      </h2>
+      </Heading>
       <DocTable
         headers={["Parameter", "Type", "Default", "Description"]}
         rows={[
@@ -63,9 +64,9 @@ function MonitoringPage() {
       </CodeBlock>
 
       {/* Prometheus Metrics */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Prometheus Metrics
-      </h2>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-4">
         BeamDrop exposes a <code className="text-primary">/metrics</code>{" "}
         endpoint in Prometheus text format.
@@ -104,9 +105,9 @@ function MonitoringPage() {
       />
 
       {/* Grafana */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Grafana Dashboard
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed">
         A pre-built Grafana dashboard is available at{" "}
         <code className="text-primary">docs/grafana-dashboard.json</code>.
