@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/presigned-urls")({
   component: PresignedUrlsPage,
@@ -12,24 +13,24 @@ function PresignedUrlsPage() {
       description="Access objects without full HMAC auth using time-limited presigned URLs. Two methods available: client-side HMAC and server-side pretty URLs."
     >
       {/* Client-side HMAC */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Client-Side HMAC Presigned URLs
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         Generate a self-contained URL with a time-limited token. No server call
         needed. Anyone with the link can access the file until it expires.
       </p>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         URL Format
-      </h3>
+      </Heading>
       <CodeBlock>
         {`GET /api/v1/buckets/{bucket}/{key}?token=<token>&expires=<timestamp>&access_key=<access_key_id>`}
       </CodeBlock>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Token Generation
-      </h3>
+      </Heading>
       <p className="text-sm text-muted-foreground mb-3">
         The token is an HMAC-SHA256 signature of four fields joined by newlines:
       </p>
@@ -46,9 +47,9 @@ function PresignedUrlsPage() {
         ]}
       />
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Query Parameters
-      </h3>
+      </Heading>
       <DocTable
         headers={["Parameter", "Example", "Description"]}
         rows={[
@@ -66,16 +67,16 @@ function PresignedUrlsPage() {
         ]}
       />
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Example with cURL
-      </h3>
+      </Heading>
       <CodeBlock title="Generate & use a presigned URL">
         {`# Configuration\nSECRET_KEY="sk_your_secret_key"\nACCESS_KEY="BDK_your_access_key"\nBUCKET="photos"\nKEY="vacation/beach.jpg"\nEXPIRES_UNIX=$(date -d '+1 hour' +%s)  # 1 hour from now\n\n# Generate token\nMESSAGE=$(printf "GET\\n%s\\n%s\\n%s" "$BUCKET" "$KEY" "$EXPIRES_UNIX")\nTOKEN=$(printf '%s' "$MESSAGE" | openssl dgst -sha256 -hmac "$SECRET_KEY" -binary | base64 | tr '+/' '-_' | tr -d '=')\nEXPIRES_ISO=$(date -u -d@\${EXPIRES_UNIX} +%Y-%m-%dT%H:%M:%SZ)\n\n# Use the URL\ncurl "http://localhost:8090/api/v1/buckets/\${BUCKET}/\${KEY}?token=\${TOKEN}&expires=\${EXPIRES_ISO}&access_key=\${ACCESS_KEY}"`}
       </CodeBlock>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Important Behaviors
-      </h3>
+      </Heading>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm">
         <li>
           <strong>Always expires</strong> — there is no "permanent" presigned
@@ -103,9 +104,9 @@ function PresignedUrlsPage() {
         </li>
       </ul>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Suggested Expiry Durations
-      </h3>
+      </Heading>
       <DocTable
         headers={["Use Case", "Duration"]}
         rows={[
@@ -117,18 +118,18 @@ function PresignedUrlsPage() {
       />
 
       {/* Server-side Pretty URLs */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-14 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-14 mb-3">
         Server-Side Pretty Presigned URLs
-      </h2>
+      </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
         In addition to client-side HMAC URLs, Beamdrop supports a server-side
         presigned URL registry that produces short, clean{" "}
         <code className="text-primary">/dl/&#123;token&#125;</code> URLs.
       </p>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Comparison
-      </h3>
+      </Heading>
       <DocTable
         headers={["Feature", "Client-Side (HMAC)", "Server-Side (Pretty)"]}
         rows={[
@@ -145,9 +146,9 @@ function PresignedUrlsPage() {
         ]}
       />
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Create Pretty Presigned URL
-      </h3>
+      </Heading>
       <CodeBlock title="POST /api/v1/presign">
         {`curl -X POST https://server/api/v1/presign \\\n  -H "Authorization: Bearer BDK_xxx:signature" \\\n  -H "X-Beamdrop-Date: 2026-02-24T12:00:00Z" \\\n  -H "Content-Type: application/json" \\\n  -d '{\n    "bucket": "photos",\n    "key": "vacation/beach.jpg",\n    "expiresIn": 3600,\n    "maxDownloads": 100\n  }'`}
       </CodeBlock>
@@ -155,16 +156,16 @@ function PresignedUrlsPage() {
         {`{\n  "token": "a1b2c3d4e5f6789a0b1c2d3e4f5a6b7c",\n  "url": "https://server/dl/a1b2c3d4e5f6789a0b1c2d3e4f5a6b7c",\n  "bucket": "photos",\n  "key": "vacation/beach.jpg",\n  "method": "GET",\n  "expiresAt": "2026-02-24T13:00:00Z",\n  "maxDownloads": 100,\n  "createdAt": "2026-02-24T12:00:00Z"\n}`}
       </CodeBlock>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Download (Public — No Auth)
-      </h3>
+      </Heading>
       <CodeBlock>
         {`curl https://server/dl/a1b2c3d4e5f6789a0b1c2d3e4f5a6b7c -o beach.jpg`}
       </CodeBlock>
 
-      <h3 className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
+      <Heading as="h3" className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2">
         Revoke & List
-      </h3>
+      </Heading>
       <CodeBlock title="Revoke">
         {`curl -X DELETE https://server/api/v1/presign/a1b2c3d4e5f6789a0b1c2d3e4f5a6b7c \\\n  -H "Authorization: Bearer BDK_xxx:signature" \\\n  -H "X-Beamdrop-Date: ..."`}
       </CodeBlock>
@@ -172,9 +173,9 @@ function PresignedUrlsPage() {
         {`curl https://server/api/v1/presign \\\n  -H "Authorization: Bearer BDK_xxx:signature" \\\n  -H "X-Beamdrop-Date: ..."`}
       </CodeBlock>
 
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Alternatives for Permanent Public Access
-      </h2>
+      </Heading>
       <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
         <li>
           <strong>
