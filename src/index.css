@@ -226,3 +226,42 @@ All colors MUST be HSL.
     color: hsl(var(--accent-foreground));
   }
 }
+
+/* Documentation prose styles */
+@layer components {
+  .prose-doc p {
+    @apply text-sm leading-relaxed text-foreground/80;
+  }
+
+  .prose-doc ul {
+    @apply list-disc pl-5 space-y-1 text-sm text-foreground/80;
+  }
+
+  .prose-doc ol {
+    @apply list-decimal pl-5 space-y-1 text-sm text-foreground/80;
+  }
+
+  .prose-doc li {
+    @apply leading-relaxed;
+  }
+
+  .prose-doc a {
+    @apply text-primary hover:underline;
+  }
+
+  .prose-doc code:not(pre code) {
+    @apply px-1.5 py-0.5 rounded bg-muted font-mono text-xs text-foreground;
+  }
+
+  .prose-doc strong {
+    @apply font-bold text-foreground;
+  }
+
+  .prose-doc blockquote {
+    @apply border-l-2 border-primary/30 pl-4 italic text-muted-foreground text-sm;
+  }
+
+  .prose-doc hr {
+    @apply border-border my-8;
+  }
+}
