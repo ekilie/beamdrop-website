@@ -81,6 +81,15 @@
   </head>
 
   <body>
+    <script>
+      (function() {
+        var t = localStorage.getItem('beamdrop-ui-theme') || 'system';
+        var d = t === 'system'
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          : t;
+        document.documentElement.classList.add(d);
+      })();
+    </script>
     <div id="beamdrop"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
