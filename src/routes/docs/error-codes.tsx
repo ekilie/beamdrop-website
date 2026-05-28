@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DocPage, CodeBlock, DocTable } from "@/components/DocPage";
+import { Heading } from "@/components/Heading";
 
 export const Route = createFileRoute("/docs/error-codes")({
   component: ErrorCodesPage,
@@ -12,17 +13,17 @@ function ErrorCodesPage() {
       description="Structured error responses with machine-readable codes for all failure scenarios."
     >
       {/* Error Format */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-8 mb-3">
         Error Response Format
-      </h2>
+      </Heading>
       <CodeBlock title="JSON error structure" language="json">
         {`{\n  "code": "BUCKET_NOT_FOUND",\n  "category": "NOT_FOUND",\n  "message": "Bucket 'my-bucket' not found"\n}`}
       </CodeBlock>
 
       {/* Categories */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Error Categories
-      </h2>
+      </Heading>
       <DocTable
         headers={["Category", "Description"]}
         rows={[
@@ -38,9 +39,9 @@ function ErrorCodesPage() {
       />
 
       {/* Validation Errors */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Validation Errors (400)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
@@ -63,9 +64,9 @@ function ErrorCodesPage() {
       />
 
       {/* Storage Errors */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Storage Errors (500)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
@@ -78,9 +79,9 @@ function ErrorCodesPage() {
       />
 
       {/* Auth Errors */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Authentication Errors (401/403)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
@@ -94,9 +95,9 @@ function ErrorCodesPage() {
       />
 
       {/* Not Found */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Not Found Errors (404)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
@@ -107,9 +108,9 @@ function ErrorCodesPage() {
       />
 
       {/* Conflict */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Conflict Errors (409)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
@@ -120,9 +121,9 @@ function ErrorCodesPage() {
       />
 
       {/* Rate Limit */}
-      <h2 className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
+      <Heading as="h2" className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3">
         Rate Limit Errors (429)
-      </h2>
+      </Heading>
       <DocTable
         headers={["Code", "HTTP", "Description"]}
         rows={[
