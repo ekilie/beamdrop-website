@@ -296,8 +296,8 @@ npx skills add ekilie/beamdrop-skills --list`}
         </Step>
         <Step label="2" title="Add to your AI assistant">
           <p className="text-sm text-muted-foreground mb-3">
-            Add the MCP server configuration to your assistant. The MCP
-            endpoint uses the same HMAC-SHA256 authentication as the S3 API.
+            Add the MCP server configuration to your assistant. The MCP endpoint
+            uses the same HMAC-SHA256 authentication as the S3 API.
           </p>
           <CodeBlock
             title="Claude Desktop — claude_desktop_config.json"
@@ -477,11 +477,7 @@ npx skills add ekilie/beamdrop-skills --list`}
             "/api/v1/webhooks/{id}",
             "Delete webhook and delivery history",
           ],
-          [
-            "POST",
-            "/api/v1/webhooks/{id}/test",
-            "Send a synthetic test event",
-          ],
+          ["POST", "/api/v1/webhooks/{id}/test", "Send a synthetic test event"],
           [
             "GET",
             "/api/v1/webhooks/{id}/deliveries",
