@@ -246,7 +246,7 @@ npx skills add ekilie/beamdrop-skills --list`}
         MCP Server
       </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
-        Beamdrop includes a TypeScript{" "}
+        Beamdrop includes a built-in{" "}
         <a
           href="https://modelcontextprotocol.io"
           target="_blank"
@@ -255,10 +255,34 @@ npx skills add ekilie/beamdrop-skills --list`}
         >
           Model Context Protocol (MCP)
         </a>{" "}
-        server that lets AI assistants directly interact with your Beamdrop
-        instance through 16 tools — creating buckets, uploading files,
-        generating presigned URLs, and managing API keys.
+        server at the <code className="text-primary">/mcp</code> endpoint. It
+        uses Streamable HTTP transport with JSON-RPC 2.0 — no separate process,
+        no TypeScript build. It runs natively as part of the Beamdrop server.
       </p>
+
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
+        Endpoints
+      </Heading>
+      <DocTable
+        headers={["Method", "URL", "Auth", "Description"]}
+        rows={[
+          [
+            "GET",
+            "/mcp",
+            "None (public)",
+            "Discovery — returns protocol version, transport, available methods",
+          ],
+          [
+            "POST",
+            "/mcp",
+            "API key (HMAC-SHA256)",
+            "JSON-RPC 2.0 requests — initialize, ping, tools/list, tools/call",
+          ],
+        ]}
+      />
 
       <Heading
         as="h3"
@@ -267,26 +291,13 @@ npx skills add ekilie/beamdrop-skills --list`}
         Setup
       </Heading>
       <Steps>
-        <Step label="1" title="Build the MCP server">
-          <CodeBlock>{`cd mcp && npm install && npx tsc`}</CodeBlock>
+        <Step label="1" title="Ensure API auth is enabled">
+          <CodeBlock>{`beamdrop -dir /path/to/share -api-auth`}</CodeBlock>
         </Step>
-        <Step label="2" title="Configure environment variables">
-          <DocTable
-            headers={["Variable", "Required", "Description"]}
-            rows={[
-              [
-                "BEAMDROP_BASE_URL",
-                "Yes",
-                "Your Beamdrop server URL (e.g., http://localhost:7777)",
-              ],
-              ["BEAMDROP_ACCESS_KEY_ID", "Yes", "API access key (BDK_...)"],
-              ["BEAMDROP_SECRET_KEY", "Yes", "API secret key (sk_...)"],
-            ]}
-          />
-        </Step>
-        <Step label="3" title="Add to your AI assistant">
+        <Step label="2" title="Add to your AI assistant">
           <p className="text-sm text-muted-foreground mb-3">
-            Add the MCP server configuration to your assistant:
+            Add the MCP server configuration to your assistant. The MCP
+            endpoint uses the same HMAC-SHA256 authentication as the S3 API.
           </p>
           <CodeBlock
             title="Claude Desktop — claude_desktop_config.json"
@@ -295,12 +306,10 @@ npx skills add ekilie/beamdrop-skills --list`}
             {`{
   "mcpServers": {
     "beamdrop": {
-      "command": "node",
-      "args": ["/path/to/beamdrop/mcp/dist/index.js"],
-      "env": {
-        "BEAMDROP_BASE_URL": "http://localhost:7777",
-        "BEAMDROP_ACCESS_KEY_ID": "BDK_your_key",
-        "BEAMDROP_SECRET_KEY": "sk_your_secret"
+      "url": "https://your-server.com/mcp",
+      "headers": {
+        "Authorization": "Bearer BDK_your_key:signature",
+        "X-Beamdrop-Date": "ISO-8601-timestamp"
       }
     }
   }
@@ -310,12 +319,10 @@ npx skills add ekilie/beamdrop-skills --list`}
             {`{
   "servers": {
     "beamdrop": {
-      "command": "node",
-      "args": ["\${workspaceFolder}/mcp/dist/index.js"],
-      "env": {
-        "BEAMDROP_BASE_URL": "http://localhost:7777",
-        "BEAMDROP_ACCESS_KEY_ID": "BDK_your_key",
-        "BEAMDROP_SECRET_KEY": "sk_your_secret"
+      "url": "https://your-server.com/mcp",
+      "headers": {
+        "Authorization": "Bearer BDK_your_key:signature",
+        "X-Beamdrop-Date": "ISO-8601-timestamp"
       }
     }
   }
@@ -436,6 +443,136 @@ npx skills add ekilie/beamdrop-skills --list`}
         as="h2"
         className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
       >
+        Webhooks
+      </Heading>
+      <p className="text-muted-foreground leading-relaxed mb-4">
+        Beamdrop supports real-time event notifications via webhooks. Register
+        HTTP callback URLs and receive HMAC-SHA256 signed POST requests when
+        events occur — object uploads, bucket creation, share links, presigned
+        URLs, and more.
+      </p>
+
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
+        Webhook API
+      </Heading>
+      <DocTable
+        headers={["Method", "Endpoint", "Description"]}
+        rows={[
+          [
+            "POST",
+            "/api/v1/webhooks",
+            "Create webhook (returns signing secret once)",
+          ],
+          ["GET", "/api/v1/webhooks", "List all webhooks"],
+          [
+            "PATCH",
+            "/api/v1/webhooks/{id}",
+            "Update webhook (name, url, enabled, events, rotate_secret)",
+          ],
+          [
+            "DELETE",
+            "/api/v1/webhooks/{id}",
+            "Delete webhook and delivery history",
+          ],
+          [
+            "POST",
+            "/api/v1/webhooks/{id}/test",
+            "Send a synthetic test event",
+          ],
+          [
+            "GET",
+            "/api/v1/webhooks/{id}/deliveries",
+            "List recent delivery attempts",
+          ],
+        ]}
+      />
+
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
+        Event Types
+      </Heading>
+      <DocTable
+        headers={["Event", "Description"]}
+        rows={[
+          ["beamdrop.object.created", "Object uploaded or created"],
+          ["beamdrop.object.updated", "Object content updated"],
+          ["beamdrop.object.deleted", "Object deleted"],
+          ["beamdrop.bucket.created", "Bucket created"],
+          ["beamdrop.bucket.deleted", "Bucket deleted"],
+          ["beamdrop.share.created", "Shareable link created"],
+          ["beamdrop.share.deleted", "Shareable link deleted"],
+          ["beamdrop.presign.created", "Presigned URL created"],
+          ["beamdrop.presign.deleted", "Presigned URL revoked"],
+        ]}
+      />
+      <p className="text-sm text-muted-foreground mb-4">
+        Wildcards supported:{" "}
+        <code className="text-primary">beamdrop.object.*</code>,{" "}
+        <code className="text-primary">beamdrop.bucket.*</code>,{" "}
+        <code className="text-primary">beamdrop.share.*</code>,{" "}
+        <code className="text-primary">beamdrop.presign.*</code>
+      </p>
+
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
+        Webhook Signing
+      </Heading>
+      <p className="text-sm text-muted-foreground mb-3">
+        Every delivery is signed with HMAC-SHA256. Verify in your handler:
+      </p>
+      <CodeBlock title="Signature verification">
+        {`signature_base = timestamp + "\\n" + delivery_id + "\\n" + request_body
+expected = "v1=" + hex(HMAC-SHA256(signature_base, webhook_secret))
+# Compare with X-Beamdrop-Signature header (constant-time)`}
+      </CodeBlock>
+
+      <Heading
+        as="h3"
+        className="text-base font-bold font-mono uppercase tracking-tight mt-6 mb-2"
+      >
+        Delivery Headers
+      </Heading>
+      <DocTable
+        headers={["Header", "Description"]}
+        rows={[
+          ["X-Beamdrop-Webhook-Id", "Webhook ID"],
+          ["X-Beamdrop-Event", "Event type (e.g., beamdrop.object.created)"],
+          ["X-Beamdrop-Delivery-Id", "Unique delivery UUID"],
+          ["X-Beamdrop-Timestamp", "Unix timestamp"],
+          ["X-Beamdrop-Signature", "v1= + hex HMAC-SHA256 signature"],
+        ]}
+      />
+
+      <Callout type="info" title="Delivery behavior">
+        <p className="text-sm">
+          Up to 8 retry attempts with exponential backoff (2s base, 15min max).
+          Retryable HTTP codes: 408, 425, 429, 500, 502, 503, 504. 10-second
+          timeout per attempt. Dead-lettered after max attempts. 7-day delivery
+          history retention.
+        </p>
+      </Callout>
+
+      <CodeBlock title="Create a webhook">
+        {`curl -X POST https://your-server.com/api/v1/webhooks \\
+  -H "Authorization: Bearer BDK_xxx:signature" \\
+  -H "X-Beamdrop-Date: 2024-01-15T10:30:00Z" \\
+  -H "Content-Type: application/json" \\
+  -d '{"name":"my-hook","url":"https://example.com/webhook","event_types":["beamdrop.object.*"]}'
+# Response: {"webhook":{...}, "secret":"whsec_...", "warning":"Save the secret now..."}`}
+      </CodeBlock>
+
+      {/* Agent Instructions */}
+      <Heading
+        as="h2"
+        className="text-xl font-bold font-mono uppercase tracking-tight mt-10 mb-3"
+      >
         Agent Instructions
       </Heading>
       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -493,8 +630,13 @@ npx skills add ekilie/beamdrop-skills --list`}
           ],
           [
             "MCP Server",
-            "mcp/ directory",
-            "Model Context Protocol server with 16 tools",
+            "GET/POST /mcp",
+            "Built-in MCP server with 16 tools (Streamable HTTP transport)",
+          ],
+          [
+            "Webhooks",
+            "/api/v1/webhooks",
+            "Real-time HMAC-signed event notifications",
           ],
           [
             "Agent Instructions",
