@@ -25,6 +25,7 @@ import { Route as DocsConfigurationRouteImport } from './routes/docs/configurati
 import { Route as DocsAuthenticationRouteImport } from './routes/docs/authentication'
 import { Route as DocsArchitectureRouteImport } from './routes/docs/architecture'
 import { Route as DocsApiRouteImport } from './routes/docs/api'
+import { Route as DocsAiIntegrationRouteImport } from './routes/docs/ai-integration'
 
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
@@ -106,10 +107,16 @@ const DocsApiRoute = DocsApiRouteImport.update({
   path: '/docs/api',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsAiIntegrationRoute = DocsAiIntegrationRouteImport.update({
+  id: '/docs/ai-integration',
+  path: '/docs/ai-integration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
     | '/docs/authentication'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
     | '/docs/authentication'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
     | '/docs/authentication'
@@ -222,6 +234,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  DocsAiIntegrationRoute: typeof DocsAiIntegrationRoute
   DocsApiRoute: typeof DocsApiRoute
   DocsArchitectureRoute: typeof DocsArchitectureRoute
   DocsAuthenticationRoute: typeof DocsAuthenticationRoute
@@ -352,12 +365,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsApiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/ai-integration': {
+      id: '/docs/ai-integration'
+      path: '/docs/ai-integration'
+      fullPath: '/docs/ai-integration'
+      preLoaderRoute: typeof DocsAiIntegrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  DocsAiIntegrationRoute: DocsAiIntegrationRoute,
   DocsApiRoute: DocsApiRoute,
   DocsArchitectureRoute: DocsArchitectureRoute,
   DocsAuthenticationRoute: DocsAuthenticationRoute,

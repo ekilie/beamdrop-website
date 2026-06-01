@@ -43,4 +43,10 @@ export const docsNav: NavGroup[] = [
       { to: "/docs/architecture", label: "Architecture" },
     ],
   },
+  {
+    title: "AI & Agents",
+    items: [
+      { to: "/docs/ai-integration", label: "AI & Agent Integration" },
+    ],
+  },
 ];
