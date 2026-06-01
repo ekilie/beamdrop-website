@@ -47,6 +47,8 @@ export const docsNav: NavGroup[] = [
     title: "AI & Agents",
     items: [
       { to: "/docs/ai-integration", label: "AI & Agent Integration" },
+      { to: "/llms-txt", label: "llms.txt" },
+      { to: "/llms-full-txt", label: "llms-full.txt" },
     ],
   },
 ];

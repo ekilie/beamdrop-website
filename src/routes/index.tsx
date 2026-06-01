@@ -20,6 +20,10 @@ import {
   BookOpen,
   Container,
   BarChart3,
+  Bot,
+  FileText,
+  Wrench,
+  Cpu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -485,6 +489,117 @@ function Landing() {
                 className="gap-2 font-mono uppercase tracking-wide text-xs"
               >
                 Full API Documentation <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* AI & Agent Integration */}
+      <section className="py-24 px-4 border-t border-border/50">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 mb-6">
+              <Bot className="w-3.5 h-3.5 text-primary" />
+              <span className="font-mono text-xs uppercase tracking-widest text-primary">
+                AI-Ready
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold font-mono uppercase tracking-tight mb-4">
+              Built for Agents
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              First-class support for LLMs and AI agents — machine-readable
+              docs, installable skills, and an MCP server with 16 tools.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            {[
+              {
+                icon: FileText,
+                title: "llms.txt",
+                desc: "Machine-readable API docs at /llms.txt following the llmstxt.org standard. Any LLM can discover your server instantly.",
+                link: "/llms-txt",
+              },
+              {
+                icon: Wrench,
+                title: "Agent Skills",
+                desc: "Install with npx skills add — teaches agents correct auth, SDK usage, error handling, and presigned URL strategies.",
+                link: "/docs/ai-integration",
+              },
+              {
+                icon: Cpu,
+                title: "MCP Server",
+                desc: "16-tool Model Context Protocol server for Claude, Copilot, and any MCP-compatible assistant.",
+                link: "/docs/ai-integration",
+              },
+            ].map((item, i) => (
+              <motion.div key={item.title} variants={fadeUp} custom={i + 1}>
+                <Link to={item.link}>
+                  <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors group cursor-pointer">
+                    <CardContent className="p-6">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-mono text-sm font-bold uppercase tracking-wide mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div variants={fadeUp} custom={4}>
+              <CodeBlock title="Install agent skills">
+                {`# Install Beamdrop skills for your AI agent
+npx skills add ekilie/beamdrop-skills
+
+# Or as a Claude Code plugin
+/plugin add ekilie/beamdrop-skills`}
+              </CodeBlock>
+            </motion.div>
+          </motion.div>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link to="/docs/ai-integration">
+              <Button
+                variant="outline"
+                className="gap-2 font-mono uppercase tracking-wide text-xs"
+              >
+                AI Integration Docs <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </Link>
+            <Link to="/llms-txt">
+              <Button
+                variant="outline"
+                className="gap-2 font-mono uppercase tracking-wide text-xs"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                View llms.txt
               </Button>
             </Link>
           </div>

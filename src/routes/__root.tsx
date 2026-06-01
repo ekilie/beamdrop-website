@@ -26,6 +26,8 @@ function RootLayout() {
     { to: "/docs", label: "Docs" },
     { to: "/docs/installation", label: "Install" },
     { to: "/docs/api", label: "API" },
+    { to: "/docs/ai-integration", label: "AI" },
+    { to: "/llms-txt", label: "llms.txt" },
   ];
 
   return (

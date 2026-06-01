@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LlmsTxtRouteImport } from './routes/llms-txt'
+import { Route as LlmsFullTxtRouteImport } from './routes/llms-full-txt'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
@@ -27,6 +29,16 @@ import { Route as DocsArchitectureRouteImport } from './routes/docs/architecture
 import { Route as DocsApiRouteImport } from './routes/docs/api'
 import { Route as DocsAiIntegrationRouteImport } from './routes/docs/ai-integration'
 
+const LlmsTxtRoute = LlmsTxtRouteImport.update({
+  id: '/llms-txt',
+  path: '/llms-txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullTxtRoute = LlmsFullTxtRouteImport.update({
+  id: '/llms-full-txt',
+  path: '/llms-full-txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -116,6 +128,8 @@ const DocsAiIntegrationRoute = DocsAiIntegrationRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/llms-full-txt': typeof LlmsFullTxtRoute
+  '/llms-txt': typeof LlmsTxtRoute
   '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
@@ -135,6 +149,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/llms-full-txt': typeof LlmsFullTxtRoute
+  '/llms-txt': typeof LlmsTxtRoute
   '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
@@ -155,6 +171,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/llms-full-txt': typeof LlmsFullTxtRoute
+  '/llms-txt': typeof LlmsTxtRoute
   '/docs/ai-integration': typeof DocsAiIntegrationRoute
   '/docs/api': typeof DocsApiRoute
   '/docs/architecture': typeof DocsArchitectureRoute
@@ -176,6 +194,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/llms-full-txt'
+    | '/llms-txt'
     | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
@@ -195,6 +215,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/llms-full-txt'
+    | '/llms-txt'
     | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
@@ -214,6 +236,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/llms-full-txt'
+    | '/llms-txt'
     | '/docs/ai-integration'
     | '/docs/api'
     | '/docs/architecture'
@@ -234,6 +258,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  LlmsFullTxtRoute: typeof LlmsFullTxtRoute
+  LlmsTxtRoute: typeof LlmsTxtRoute
   DocsAiIntegrationRoute: typeof DocsAiIntegrationRoute
   DocsApiRoute: typeof DocsApiRoute
   DocsArchitectureRoute: typeof DocsArchitectureRoute
@@ -253,6 +279,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/llms-txt': {
+      id: '/llms-txt'
+      path: '/llms-txt'
+      fullPath: '/llms-txt'
+      preLoaderRoute: typeof LlmsTxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms-full-txt': {
+      id: '/llms-full-txt'
+      path: '/llms-full-txt'
+      fullPath: '/llms-full-txt'
+      preLoaderRoute: typeof LlmsFullTxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$': {
       id: '/$'
       path: '/$'
@@ -378,6 +418,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  LlmsFullTxtRoute: LlmsFullTxtRoute,
+  LlmsTxtRoute: LlmsTxtRoute,
   DocsAiIntegrationRoute: DocsAiIntegrationRoute,
   DocsApiRoute: DocsApiRoute,
   DocsArchitectureRoute: DocsArchitectureRoute,
